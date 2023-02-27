@@ -1,0 +1,63 @@
+<h1>Short URLs</h1>
+
+<%= form_tag '/search', method: 'GET' do %>
+  <%= label_tag :code, 'Short URL: ' %>
+  <%= text_field_tag :code, params[:code] %>
+
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<% if current_user %>
+  <p>
+    Hello <%= current_user.email %>
+    <br>
+    You're signed in!
+    <br>
+    <p>
+      Your role is <span><%= current_user.role %></span>
+      <% if current_user.admin? %>
+        <br>
+        <h2>Short URL List</h2>
+        <%= link_to 'New Short URL', new_short_url_path %>
+        <table>
+          <thead>
+            <tr>
+              <td>Full URL</td>
+              <td>Short URL</td>
+              <td>Clicks</td>
+              <td></td>
+              <td>Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% @short_urls.each do |short_url| %>
+              <tr>
+                <td><%= short_url.full_url %></td>
+                <td><%= short_url.code %></td>
+                <td><%= short_url.visit_histories.size %></td>
+                <td>
+                  <%= link_to 'History', visit_histories_path(short_url, short_url_id: short_url.id) %>
+                </td>
+                <td>
+                  <%= link_to 'Edit', edit_short_url_path(short_url) %>
+                  <%= link_to 'Delete', short_url_path(short_url), data: {'turbo-method': :delete, turbo_confirm: 'Are you sure?'} %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </p>
+  </p>
+  <br>
+  <%= link_to 'Sign out', destroy_user_session_path, data: {'turbo-method': :delete} %>
+
+<% else %>
+  <p>
+    You're signed out!
+  </p>
+  <br>
+  <%= link_to 'Sign up', new_user_registration_path %>
+  <br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>

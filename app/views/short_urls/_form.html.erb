@@ -1,0 +1,8 @@
+<%= form_for short_url do |short_url| %>
+  <%= short_url.label :full_url, 'Full URL: ' %>
+  <%= short_url.url_field :full_url %>
+
+  <%= short_url.submit %>
+<% end %>
+
+<%= link_to 'Back to Main Page', root_path %>

@@ -1,0 +1,18 @@
+<h1>Visit History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <td>IP Address</td>
+      <td>Time</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @visit_histories.each do |visit_history| %>
+      <tr>
+        <td><%= visit_history.ip_address %></td>
+        <td><%= visit_history.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

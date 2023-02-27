@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :short_urls
+  get '/search', to: 'short_urls#redirect'
+  get '/visit_histories', to: 'short_urls#check_visit_histories'
+
+  resources :visit_histories, only: %i[ create ]
+
+  root 'short_urls#index'
 end
