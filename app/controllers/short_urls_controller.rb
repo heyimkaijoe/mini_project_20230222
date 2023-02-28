@@ -1,6 +1,6 @@
 class ShortUrlsController < ApplicationController
 
-    before_action :authenticate_admin!, except: %i[ index redirect ]
+    before_action :authenticate_admin!, except: %i[ index redirect show ]
     before_action :find_short_url, only: %i[ show edit update destroy ]
 
   def index
